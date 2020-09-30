@@ -1,6 +1,10 @@
 #pragma once
 #include <iostream>
 using namespace std;
+/// <summary>
+/// 顺序表
+/// </summary>
+/// <typeparam name="T"></typeparam>
 template<class T>
 class SequenceList
 {
@@ -11,17 +15,15 @@ private:
 	const int static defaultSize = 64;  //默认容量
 	int sizeToAdd;  //每次resize增加的容量(2、4、8、16....)
 
-	void resize();
+	void resize();  //扩容
 
 public:
-	/// <summary>
-	/// 构造函数
-	/// </summary>
-	/// <param name="size">默认内存大小</param>
-	SequenceList(int size = defaultSize);
+
+	SequenceList(int size = defaultSize);  //构造函数
 	~SequenceList();  //析构函数
 
-	bool Insert(int pos, T ele);
+	bool Insert(int pos, T ele);  //插入
+	int Search(T ele);            //查找
 
 };
 

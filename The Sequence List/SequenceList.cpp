@@ -1,6 +1,9 @@
 #include "SequenceList.h"
 
-
+/// <summary>
+/// 扩容
+/// </summary>
+/// <typeparam name="T"></typeparam>
 template<class T>
 void SequenceList<T>::resize()
 {
@@ -19,6 +22,11 @@ void SequenceList<T>::resize()
 	sizeToAdd *= 2;       //每次扩容更多
 }
 
+/// <summary>
+/// 构造函数
+/// </summary>
+/// <typeparam name="T"></typeparam>
+/// <param name="size">默认容量</param>
 template<class T>
 SequenceList<T>::SequenceList(int size)
 {
@@ -32,19 +40,49 @@ SequenceList<T>::SequenceList(int size)
 	sizeToAdd = 2;
 }
 
+/// <summary>
+/// 析构函数
+/// </summary>
+/// <typeparam name="T"></typeparam>
 template<class T>
 SequenceList<T>::~SequenceList()
 {
 	delete[] data;
 }
 
+/// <summary>
+/// 插入数据
+/// </summary>
+/// <typeparam name="T"></typeparam>
+/// <param name="pos">插入位置(下标)</param>
+/// <param name="ele">插入元素</param>
+/// <returns>是否插入成功(bool)</returns>
 template<class T>
 bool SequenceList<T>::Insert(int pos, T ele)
 {
-	if (pos<0 || pos >length) {
+	if (pos<0 || pos >length) {  //超出范围，插入失败
 		return false;
 	}
-	for (int i = pos; i < length; i++) {
+	if (maxSize == length)   //容量不足，扩容
+		resize();
+
+	for (int i = length-1; i >= pos; i--)  //后移
 		data[i + 1] = data[i];
-	}
+
+	data[pos] = ele;
+}
+
+/// <summary>
+/// 查找
+/// </summary>
+/// <typeparam name="T"></typeparam>
+/// <param name="ele">查找的元素</param>
+/// <returns>找到则返回相应位置（下标），未找到返回-1</returns>
+template<class T>
+int SequenceList<T>::Search(T ele)
+{
+	for (int i = 0; i < length; i++)
+		if (ele == data[i])
+			return i;
+	return -1;
 }
