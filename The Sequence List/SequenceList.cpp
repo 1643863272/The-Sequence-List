@@ -9,13 +9,14 @@ void SequenceList<T>::resize()
 		cerr << "内存分配失败!" << endl;
 		exit(1);
 	}
-	T* header = data;
-	T* newHeader = newDate;
-	while (header) {
-		*newHeader++ = *header++;
-	}
+	//复制
+	for (int i = 0; i < length; i++)
+		newDate[i] = data[i];
+
 	delete[] data;
 	data = newDate;
+	maxSize += sizeToAdd;
+	sizeToAdd *= 2;       //每次扩容更多
 }
 
 template<class T>
