@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include "SequenceList.h"
+#include "SequenceList.cpp"
 using namespace std;
 
 int main() {
