@@ -24,7 +24,8 @@ public:
 
 	bool Insert(int pos, T ele);  //插入
 	bool PushBack(T ele);         //在最后插入
-	int Search(T ele) const;            //查找
-	void Display() const;       //显示所有元素
+	int Search(T ele) const;      //查找
+	int Locate(T ele) const;      //定位      
+	void Display() const;         //显示所有元素
 
 };

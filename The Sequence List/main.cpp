@@ -18,5 +18,8 @@ int main() {
 	a.Display();
 	cout << a.Search(6) << endl;
 	cout << a.Search(120) << endl;
+
+	cout << a.Locate(6) << endl;
+	cout << a.Locate(120) << endl;
 	return 0;
 }

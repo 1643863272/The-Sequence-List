@@ -101,6 +101,18 @@ int SequenceList<T>::Search(T ele) const
 	return -1;
 }
 
+/// <summary>
+/// 定位位置（下标+1)
+/// </summary>
+/// <typeparam name="T"></typeparam>
+/// <param name="ele">定位的元素</param>
+/// <returns>返回位置（下标+1）,不存在则返回0</returns>
+template<class T>
+int SequenceList<T>::Locate(T ele) const
+{
+	return Search(ele)+1;
+}
+
 template<class T>
 void SequenceList<T>::Display() const
 {
