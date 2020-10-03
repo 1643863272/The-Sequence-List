@@ -30,6 +30,10 @@ void SequenceList<T>::resize()
 template<class T>
 SequenceList<T>::SequenceList(int size)
 {
+	if (size <= 0) {
+		cerr << "内存分配大小错误!" << endl;
+		return;
+	}
 	data = new T[size];
 	if (data == NULL) {
 		cerr << "内存分配失败！" << endl;
@@ -38,6 +42,25 @@ SequenceList<T>::SequenceList(int size)
 	maxSize = size;
 	length = 0;
 	sizeToAdd = 2;
+}
+
+/// <summary>
+/// 复制构造函数
+/// </summary>
+/// <typeparam name="T"></typeparam>
+/// <param name="L"></param>
+template<class T>
+SequenceList<T>::SequenceList(SequenceList<T>& L)
+{
+	this->length = L.length;
+	this->maxSize = L.maxSize;
+	this->data = new T[length];
+	if (this->data == NULL) {
+		cerr << "内存分配失败" << endl;
+		exit(1);
+	}
+	for (int i = 0; i < length; i++)
+		this->data[i] = L.data[i];
 }
 
 /// <summary>
@@ -71,7 +94,8 @@ bool SequenceList<T>::Insert(int pos, T ele)
 		data[i + 1] = data[i];
 
 	data[pos] = ele;
-  length++;
+    length++;
+	return true;
 }
 
 /// <summary>
@@ -134,11 +158,11 @@ int SequenceList<T>::Search(T ele) const
 }
 
 /// <summary>
-/// 定位位置（下标+1)
+/// 定位序号（下标+1)
 /// </summary>
 /// <typeparam name="T"></typeparam>
 /// <param name="ele">定位的元素</param>
-/// <returns>返回位置（下标+1）,不存在则返回0</returns>
+/// <returns>返回序号（下标+1）,不存在则返回0</returns>
 template<class T>
 int SequenceList<T>::Locate(T ele) const
 {
@@ -187,3 +211,121 @@ bool SequenceList<T>::EraseByPos(int pos)
 	length--;
 	return true;
 }
+
+/// <summary>
+/// 修改指定位置的元素
+/// </summary>
+/// <typeparam name="T"></typeparam>
+/// <param name="pos">指定位置</param>
+/// <param name="ele">修改后的元素</param>
+/// <returns>是否修改成功</returns>
+template<class T>
+bool SequenceList<T>::Modify(int pos, T ele)
+{
+	if (pos < 0 || pos >= length)
+		return false;
+	data[pos] = ele;
+	return true;
+}
+
+/// <summary>
+/// 将所有元素A改为元素B
+/// </summary>
+/// <typeparam name="T"></typeparam>
+/// <param name="A">改之前元素</param>
+/// <param name="B">改之后元素</param>
+template<class T>
+void SequenceList<T>::ModifyAToB(T A, T B)
+{
+	for (int i = 0; i < length; i++)
+		if (data[i] == A)
+			data[i] = B;
+}
+
+/// <summary>
+/// 
+/// </summary>
+/// <typeparam name="T"></typeparam>
+/// <param name="pos"></param>
+/// <returns>指定位置元素</returns>
+template<class T>
+T SequenceList<T>::At(int pos) const
+{
+	if (pos < 0 || pos >= length) {
+		cerr << "下标越界" << endl;
+		exit(1);
+	}
+	return data[pos];
+}
+
+/// <summary>
+/// 
+/// </summary>
+/// <typeparam name="T"></typeparam>
+/// <returns>元素个数</returns>
+template<class T>
+int SequenceList<T>::Size() const
+{
+	return length;
+}
+
+/// <summary>
+/// 
+/// </summary>
+/// <typeparam name="T"></typeparam>
+/// <returns>目前所能容纳元素个数</returns>
+template<class T>
+int SequenceList<T>::Capacity() const
+{
+	return maxSize;
+}
+
+/// <summary>
+/// 
+/// </summary>
+/// <typeparam name="T"></typeparam>
+/// <returns>是否为空</returns>
+template<class T>
+bool SequenceList<T>::isEmpty() const
+{
+	return (length == 0);
+}
+
+/// <summary>
+/// 清空顺序表
+/// </summary>
+/// <typeparam name="T"></typeparam>
+template<class T>
+void SequenceList<T>::Clear()
+{
+	delete[] data;
+	data = new T[maxSize];
+	if (data == NULL) {
+		cerr << "内存分配失败" << endl;
+		exit(1);
+	}
+	length = 0;
+}
+
+/// <summary>
+/// 查找元素个数
+/// </summary>
+/// <typeparam name="T"></typeparam>
+/// <param name="ele">要查询的元素</param>
+/// <returns>元素个数</returns>
+template<class T>
+int SequenceList<T>::FindCount(T ele) const
+{
+	int count = 0;
+	for (int i = 0; i < length; i++)
+		if (data[i] == ele)
+			count++;
+	return count;
+}
+
+template<class T>
+void SequenceList<T>::ReadFile(string fileName)
+{
+
+}
+

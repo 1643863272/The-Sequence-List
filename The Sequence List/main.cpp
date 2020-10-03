@@ -35,5 +35,18 @@ int main() {
 	a.Display();
 	cout << a.InsertBefore(12, 356) << endl;
 	a.Display();
+
+	a.Clear();
+	a.Display();
+	a.PushBack(145);
+	a.PushBack(12);
+	cout << "size" << a.Size() << endl;
+	a.Display();
+
+	a.Modify(1, 489);
+	a.Display();
+
+	SequenceList<int> s(a);
+	s.Display();
 	return 0;
 }
