@@ -120,3 +120,38 @@ void SequenceList<T>::Display() const
 		cout << data[i] << " ";
 	cout << endl;
 }
+
+/// <summary>
+/// 删除指定元素
+/// </summary>
+/// <typeparam name="T"></typeparam>
+/// <param name="ele">删除的元素</param>
+/// <returns>是否删除成功</returns>
+template<class T>
+bool SequenceList<T>::Erase(T ele) 
+{
+	int pos = Search(ele);
+	if (pos == -1)
+		return false;
+	for (int i = pos; i < length - 1; i++)
+		data[i] = data[i + 1];
+	length--;
+	return true;
+}
+
+/// <summary>
+/// 删除指定位置元素
+/// </summary>
+/// <typeparam name="T"></typeparam>
+/// <param name="pos">元素位置</param>
+/// <returns>是否删除成功</returns>
+template<class T>
+bool SequenceList<T>::EraseByPos(int pos)
+{
+	if (pos < 0 || pos >= length)
+		return false;
+	for (int i = pos; i < length - 1; i++)
+		data[i] = data[i + 1];
+	length--;
+	return true;
+}

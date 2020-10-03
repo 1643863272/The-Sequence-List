@@ -27,5 +27,7 @@ public:
 	int Search(T ele) const;      //查找
 	int Locate(T ele) const;      //定位      
 	void Display() const;         //显示所有元素
+	bool Erase(T ele);            //删除指定元素
+	bool EraseByPos(int pos);     //删除指定位置元素
 
 };

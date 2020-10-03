@@ -21,5 +21,13 @@ int main() {
 
 	cout << a.Locate(6) << endl;
 	cout << a.Locate(120) << endl;
+
+	cout << a.Erase(6) << endl;
+	a.Display();
+	cout << a.Erase(6) << endl;
+	a.Display();
+
+	cout << a.EraseByPos(-1) << endl;
+	cout << a.EraseByPos(4) << endl;
 	return 0;
 }
