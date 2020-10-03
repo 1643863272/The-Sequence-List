@@ -23,6 +23,8 @@ public:
 	~SequenceList();  //析构函数
 
 	bool Insert(int pos, T ele);  //插入
+	bool InsertBefore(T eleBefore,T ele);     //在指定元素前插入
+	bool InsertAfter(T eleAfter, T ele);      //在指定元素后插入
 	bool PushBack(T ele);         //在最后插入
 	int Search(T ele) const;      //查找
 	int Locate(T ele) const;      //定位      

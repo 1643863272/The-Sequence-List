@@ -75,6 +75,38 @@ bool SequenceList<T>::Insert(int pos, T ele)
 }
 
 /// <summary>
+/// 在指定元素前插入元素
+/// </summary>
+/// <typeparam name="T"></typeparam>
+/// <param name="eleBefore">指定元素</param>
+/// <param name="ele">要插入的元素</param>
+/// <returns>是否插入成功</returns>
+template<class T>
+bool SequenceList<T>::InsertBefore(T eleBefore,T ele)
+{
+	int pos = Search(eleBefore);
+	if (pos == -1)
+		return false;
+	return Insert(pos, ele);
+}
+
+/// <summary>
+/// 在指定元素后插入元素
+/// </summary>
+/// <typeparam name="T"></typeparam>
+/// <param name="eleAfter">指定元素</param>
+/// <param name="ele">插入元素</param>
+/// <returns>是否插入成功</returns>
+template<class T>
+bool SequenceList<T>::InsertAfter(T eleAfter, T ele)
+{
+	int pos = Search(eleAfter);
+	if (pos == -1)
+		return false;
+	return Insert(pos + 1, ele);
+}
+
+/// <summary>
 /// 在最后插入元素
 /// </summary>
 /// <typeparam name="T"></typeparam>

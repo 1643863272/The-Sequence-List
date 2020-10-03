@@ -29,5 +29,11 @@ int main() {
 
 	cout << a.EraseByPos(-1) << endl;
 	cout << a.EraseByPos(4) << endl;
+
+	a.Display();
+	cout << a.InsertAfter(12, 6) << endl;
+	a.Display();
+	cout << a.InsertBefore(12, 356) << endl;
+	a.Display();
 	return 0;
 }
