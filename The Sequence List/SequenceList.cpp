@@ -185,7 +185,6 @@ void SequenceList<T>::Display() const
 /// </summary>
 /// <typeparam name="T"></typeparam>
 /// <param name="ele">删除的元素</param>
-/// <returns>是否删除成功</returns>
 template<class T>
 void SequenceList<T>::Erase(T ele) 
 {
