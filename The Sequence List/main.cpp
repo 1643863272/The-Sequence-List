@@ -23,9 +23,9 @@ int main() {
 	cout << a.Locate(6) << endl;
 	cout << a.Locate(120) << endl;
 
-	cout << a.Erase(6) << endl;
+	a.Erase(6);
 	a.Display();
-	cout << a.Erase(6) << endl;
+	a.Erase(6);
 	a.Display();
 
 	cout << a.EraseByPos(-1) << endl;
@@ -76,6 +76,26 @@ int main() {
 	stuSL02.PushBack(Student("58", 1112l, 12));
 	stuSL02.Display();
 
-	
+	SequenceList<int> ss1;
+	ss1.PushBack(415);
+	ss1.PushBack(415);
+	ss1.PushBack(415);
+	ss1.PushBack(415);
+	ss1.Erase(415);
+	ss1.Display();
+	cout <<"size:"<< ss1.Size() << endl;
+	cout << ss1.isEmpty() << endl;
+	ss1.PushBack(12);
+	ss1.Display();
+	cout << "size:" << ss1.Size() << endl;
+	cout << ss1.isEmpty() << endl;
+	ss1.PushBack(12);
+	ss1.PushBack(20);
+	ss1.PushBack(12);
+	ss1.Erase(12);
+	ss1.Display();
+	cout << "size:" << ss1.Size() << endl;
+	cout << ss1.isEmpty() << endl;
+
 	return 0;
 }

@@ -159,6 +159,7 @@ int SequenceList<T>::Search(T ele) const
 	return -1;
 }
 
+
 /// <summary>
 /// 定位序号（下标+1)
 /// </summary>
@@ -180,21 +181,21 @@ void SequenceList<T>::Display() const
 }
 
 /// <summary>
-/// 删除指定元素
+/// 删除指定元素(所有)
 /// </summary>
 /// <typeparam name="T"></typeparam>
 /// <param name="ele">删除的元素</param>
 /// <returns>是否删除成功</returns>
 template<class T>
-bool SequenceList<T>::Erase(T ele) 
+void SequenceList<T>::Erase(T ele) 
 {
-	int pos = Search(ele);
-	if (pos == -1)
-		return false;
-	for (int i = pos; i < length - 1; i++)
-		data[i] = data[i + 1];
-	length--;
-	return true;
+	for (int i = 0; i < length; i++)
+		if (data[i] == ele) {
+			for (int j = i; j < length - 1; j++)
+				data[j] = data[j + 1];
+			length--;
+			i--;
+		}
 }
 
 /// <summary>

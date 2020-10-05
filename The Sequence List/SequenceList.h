@@ -33,7 +33,7 @@ public:
 	int Locate(T ele) const;      //定位
 	void Display() const;         //显示所有元素
 
-	bool Erase(T ele);            //删除指定元素
+	void Erase(T ele);            //删除指定元素（所有）
 	bool EraseByPos(int pos);     //删除指定位置元素
 
 	bool Modify(int pos, T ele);  //修改指定位置的元素
