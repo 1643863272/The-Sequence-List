@@ -2,6 +2,7 @@
 #include <vector>
 #include "SequenceList.h"
 #include "SequenceList.cpp"
+#include "Student.h"
 using namespace std;
 
 int main() {
@@ -46,7 +47,35 @@ int main() {
 	a.Modify(1, 489);
 	a.Display();
 
-	SequenceList<int> s(a);
+	a.WirteFile("a.txt");
+
+	SequenceList<int> s;
+	s.PushBack(15);
+	s.PushBack(5616);
+	s.PushBack(133);
+
+	s.WirteFile("s.txt");
+
+	s.ReadFile("a.txt");
 	s.Display();
+
+	//Student s1("1", 1561656l, 18);
+	//cout << s1;
+	//cin >> s1;
+	//cout << s1;
+
+	SequenceList<Student> stuSL01;
+	stuSL01.PushBack(Student("fzy", 6319070l, 26));
+	stuSL01.PushBack(Student("lhs", 6365070l, 16));
+	stuSL01.Display();
+	stuSL01.WirteFile("stu01.txt");
+
+	SequenceList<Student> stuSL02;
+	stuSL02.ReadFile("stu01.txt");
+	stuSL02.Display();
+	stuSL02.PushBack(Student("58", 1112l, 12));
+	stuSL02.Display();
+
+	
 	return 0;
 }

@@ -1,4 +1,6 @@
 #include "SequenceList.h"
+#include <fstream>
+using namespace std;
 
 /// <summary>
 /// 扩容
@@ -326,6 +328,51 @@ int SequenceList<T>::FindCount(T ele) const
 template<class T>
 void SequenceList<T>::ReadFile(string fileName)
 {
+	ifstream f;
+	f.open(fileName, ios::in);
+	if (!f.is_open()) {
+		cerr << "文件打开失败!" << endl;
+		return;
+	}
 
+	int num = 0;   //文件数据个数(文件第一排)
+	f >> num;
+
+	T* newData = new T[num + sizeToAdd];
+	if (newData == NULL) {
+		cerr << "内存分配失败！" << endl;
+		exit(1);
+	}
+
+	//读文件数据
+	for (int i = 0; i < num; i++)
+		f >> newData[i];
+
+	f.close();
+
+	delete[] data;
+	data = newData;
+	length = num;
+	maxSize = num + sizeToAdd;
+	sizeToAdd *= 2;
+}
+
+template<class T>
+void SequenceList<T>::WirteFile(string fileName)
+{
+	ofstream f;
+	f.open(fileName, ios::out);
+
+	if (!f.is_open()) {
+		cerr << "文件打开失败!" << endl;
+		return;
+	}
+
+	f << length << endl;
+
+	for (int i = 0; i < length; i++)
+		f << data[i] << endl;
+
+	f.close();
 }
 
