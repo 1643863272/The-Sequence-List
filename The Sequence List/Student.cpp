@@ -7,6 +7,21 @@ Student::Student(string name, long ID, int age)
 	this->age = age;
 }
 
+bool Student::operator==(const Student& other)
+{
+	return (this->ID == other.ID);
+}
+
+bool Student::operator>(const Student& other)
+{
+	return (this->ID > other.ID);
+}
+
+bool Student::operator<(const Student& other)
+{
+	return (this->ID < other.ID);
+}
+
 
 ostream& operator<<(ostream& os, const Student& s)
 {

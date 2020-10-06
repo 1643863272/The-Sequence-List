@@ -97,5 +97,26 @@ int main() {
 	cout << "size:" << ss1.Size() << endl;
 	cout << ss1.isEmpty() << endl;
 
+	ss1.Display();
+	ss1.PushBack(45);
+	ss1.PushBack(13);
+	ss1.PushBack(5);
+	ss1.PushBack(63);
+	ss1.PushBack(45);
+	ss1.Display();
+	ss1.Sort();
+	ss1.Display();
+
+
+	SequenceList<Student> stuSL03;
+	stuSL03.PushBack(Student("aa", 4564l, 12));
+	stuSL03.PushBack(Student("aa", 454l, 18));
+	stuSL03.PushBack(Student("cx", 7921l, 32));
+	stuSL03.PushBack(Student("666", 645l, 46));
+	stuSL03.Display();
+	stuSL03.Sort();
+	stuSL03.Display();
+	Student se01("56", 454l, 64);
+	cout<<stuSL03.Search(se01);
 	return 0;
 }

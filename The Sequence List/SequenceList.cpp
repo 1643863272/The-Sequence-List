@@ -25,6 +25,157 @@ void SequenceList<T>::resize()
 }
 
 /// <summary>
+/// 判断排序类型
+/// </summary>
+/// <typeparam name="T"></typeparam>
+template<class T>
+void SequenceList<T>::judgeSortType()
+{
+	if (length == 0) {
+		sortType = SortType::None;
+	}
+	else if ((length == 1) || isAllEqual()) {  //元素为1 或者 所有元素相等
+		sortType = SortType::Both;
+	}
+	else if (isIncrease()) {
+		sortType = SortType::Increase;
+	}
+	else if (isDecrease()) {
+		sortType = SortType::Decrease;
+	}
+	else {
+		sortType = SortType::None;
+	}
+}
+
+/// <summary>
+/// 
+/// </summary>
+/// <typeparam name="T"></typeparam>
+/// <returns>是否所有元素相等</returns>
+template<class T>
+bool SequenceList<T>::isAllEqual()
+{
+	if (length == 0)
+		return false;
+
+	for (int i = 1; i < length; i++)
+		if (!(data[0] == data[i]))
+			return false;
+	return true;
+}
+
+/// <summary>
+/// 
+/// </summary>
+/// <typeparam name="T"></typeparam>
+/// <returns>是否为递增</returns>
+template<class T>
+bool SequenceList<T>::isIncrease()
+{
+	if (length == 0)
+		return false;
+
+	for (int i = 1; i < length; i++)
+		if (data[i] < data[i - 1])
+			return false;
+	return true;
+}
+
+/// <summary>
+/// 
+/// </summary>
+/// <typeparam name="T"></typeparam>
+/// <returns>是否为递减</returns>
+template<class T>
+bool SequenceList<T>::isDecrease()
+{
+	if (length == 0)
+		return false;
+
+	for (int i = 1; i < length; i++)
+		if (data[i] > data[i - 1])
+			return false;
+	return true;
+}
+
+/// <summary>
+/// 插入后判断排序类型
+/// </summary>
+/// <typeparam name="T"></typeparam>
+/// <param name="pos"></param>
+template<class T>
+void SequenceList<T>::judgeSortAfterInsert(int pos)
+{
+	if (length == 1)
+		sortType = SortType::Both;
+	else if (sortType == SortType::None)  //原本无序，插入任然无序
+		return;
+	else if (isAllEqual())
+		sortType = SortType::Both;
+	else if (sortType = SortType::Increase) {   //递增时插入
+		if ((pos == 0 && data[0] > data[1]) || (pos == length - 1 && data[pos] < data[pos - 1]))
+			sortType = SortType::None;
+		else if (data[pos] > data[pos + 1] || data[pos] < data[pos - 1])
+			sortType = SortType::None;
+		else
+			return;
+	}
+	else if (sortType = SortType::Decrease) {   //递减时插入
+		if ((pos == 0 && data[0] < data[1]) || (pos == length - 1 && data[pos] > data[pos - 1]))
+			sortType = SortType::None;
+		else if (data[pos] < data[pos + 1] || data[pos] > data[pos - 1])
+			sortType = SortType::None;
+		else
+			return;
+	}
+}
+
+/// <summary>
+/// 二分法查找
+/// </summary>
+/// <typeparam name="T"></typeparam>
+/// <param name="ele"></param>
+/// <returns></returns>
+template<class T>
+int SequenceList<T>::binarySearch(T ele) const
+{
+	if (sortType == SortType::Both) {
+		if (data[0] == ele)
+			return 0;
+		else
+			return -1;
+	}
+	if (sortType == SortType::Increase) {
+		int left = 0, right = length - 1;
+		int mid;
+		while (left <= right) {
+			mid = (left + right) / 2;
+			if (ele == data[mid])
+				return mid;
+			if (ele > data[mid])
+				left = mid + 1;
+			else
+				right = mid - 1;
+		}
+	}
+	else if (sortType == SortType::Decrease) {
+		int left = 0, right = length - 1;
+		int mid;
+		while (left < right) {
+			mid = (left + right) / 2;
+			if (ele == data[mid])
+				return mid;
+			if (ele > data[mid])
+				right = mid + 1;
+			else
+				left = mid - 1;
+		}
+	}
+	return -1;
+}
+
+/// <summary>
 /// 构造函数
 /// </summary>
 /// <typeparam name="T"></typeparam>
@@ -44,6 +195,7 @@ SequenceList<T>::SequenceList(int size)
 	maxSize = size;
 	length = 0;
 	sizeToAdd = 2;
+	sortType = SortType::None;
 }
 
 /// <summary>
@@ -57,6 +209,7 @@ SequenceList<T>::SequenceList(SequenceList<T>& L)
 	this->length = L.length;
 	this->maxSize = L.maxSize;
 	this->data = new T[length];
+	this->sortType = L.sortType;
 	if (this->data == NULL) {
 		cerr << "内存分配失败" << endl;
 		exit(1);
@@ -96,7 +249,8 @@ bool SequenceList<T>::Insert(int pos, T ele)
 		data[i + 1] = data[i];
 
 	data[pos] = ele;
-    length++;
+	length++;
+	judgeSortAfterInsert(pos);  //判断排序类型
 	return true;
 }
 
@@ -108,7 +262,7 @@ bool SequenceList<T>::Insert(int pos, T ele)
 /// <param name="ele">要插入的元素</param>
 /// <returns>是否插入成功</returns>
 template<class T>
-bool SequenceList<T>::InsertBefore(T eleBefore,T ele)
+bool SequenceList<T>::InsertBefore(T eleBefore, T ele)
 {
 	int pos = Search(eleBefore);
 	if (pos == -1)
@@ -153,6 +307,11 @@ bool SequenceList<T>::PushBack(T ele)
 template<class T>
 int SequenceList<T>::Search(T ele) const
 {
+	if (length == 0)
+		return -1;
+	if (sortType == SortType::Increase || sortType == SortType::Decrease)
+		return binarySearch(ele);
+
 	for (int i = 0; i < length; i++)
 		if (ele == data[i])
 			return i;
@@ -169,7 +328,7 @@ int SequenceList<T>::Search(T ele) const
 template<class T>
 int SequenceList<T>::Locate(T ele) const
 {
-	return Search(ele)+1;
+	return Search(ele) + 1;
 }
 
 template<class T>
@@ -186,7 +345,7 @@ void SequenceList<T>::Display() const
 /// <typeparam name="T"></typeparam>
 /// <param name="ele">删除的元素</param>
 template<class T>
-void SequenceList<T>::Erase(T ele) 
+void SequenceList<T>::Erase(T ele)
 {
 	for (int i = 0; i < length; i++)
 		if (data[i] == ele) {
@@ -195,6 +354,7 @@ void SequenceList<T>::Erase(T ele)
 			length--;
 			i--;
 		}
+	judgeSortType();
 }
 
 /// <summary>
@@ -211,6 +371,9 @@ bool SequenceList<T>::EraseByPos(int pos)
 	for (int i = pos; i < length - 1; i++)
 		data[i] = data[i + 1];
 	length--;
+
+	if (length == 1 || length == 0 || isAllEqual() || sortType == SortType::None)
+		judgeSortType();
 	return true;
 }
 
@@ -227,6 +390,8 @@ bool SequenceList<T>::Modify(int pos, T ele)
 	if (pos < 0 || pos >= length)
 		return false;
 	data[pos] = ele;
+	if (isAllEqual() || sortType == SortType::None)
+		judgeSortType();
 	return true;
 }
 
@@ -242,6 +407,31 @@ void SequenceList<T>::ModifyAToB(T A, T B)
 	for (int i = 0; i < length; i++)
 		if (data[i] == A)
 			data[i] = B;
+	if (isAllEqual() || sortType == SortType::None)
+		judgeSortType();
+}
+
+/// <summary>
+/// 排序（递增）
+/// </summary>
+/// <typeparam name="T"></typeparam>
+template<class T>
+void SequenceList<T>::Sort()
+{
+	if (length == 0 || length == 1)
+		return;
+	T temp;
+	for (int i = 0; i < length - 1; i++)
+		for (int j = 0; j < length - 1; j++)
+			if (data[j] > data[j + 1]) {
+				temp = data[j];
+				data[j] = data[j + 1];
+				data[j + 1] = temp;
+			}
+	if (isAllEqual())
+		sortType = SortType::Both;
+	else
+		sortType = SortType::Increase;
 }
 
 /// <summary>
@@ -307,6 +497,7 @@ void SequenceList<T>::Clear()
 		exit(1);
 	}
 	length = 0;
+	sortType = SortType::None;
 }
 
 /// <summary>
@@ -325,6 +516,11 @@ int SequenceList<T>::FindCount(T ele) const
 	return count;
 }
 
+/// <summary>
+/// 读文件
+/// </summary>
+/// <typeparam name="T"></typeparam>
+/// <param name="fileName">文件名</param>
 template<class T>
 void SequenceList<T>::ReadFile(string fileName)
 {
@@ -355,8 +551,14 @@ void SequenceList<T>::ReadFile(string fileName)
 	length = num;
 	maxSize = num + sizeToAdd;
 	sizeToAdd *= 2;
+	judgeSortType();
 }
 
+/// <summary>
+/// 写文件
+/// </summary>
+/// <typeparam name="T"></typeparam>
+/// <param name="fileName">文件名</param>
 template<class T>
 void SequenceList<T>::WirteFile(string fileName)
 {

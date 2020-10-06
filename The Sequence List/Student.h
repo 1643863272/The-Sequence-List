@@ -14,7 +14,12 @@ private:
 	int age;       //年龄
 public:
 	Student(string name = "无名", long ID = 1, int age = 18);
-	friend ostream& operator<<(ostream& os, const Student& s);
-	friend istream& operator>>(istream& is, Student& s);
+
+	friend ostream& operator<<(ostream& os, const Student& s);   //重载输出运算符
+	friend istream& operator>>(istream& is, Student& s);         //重载输入运算符
+
+	bool operator==(const Student& other);
+	bool operator>(const Student& other);
+	bool operator<(const Student& other);
 };
 

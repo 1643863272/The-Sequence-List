@@ -2,6 +2,17 @@
 #include <iostream>
 #include <string>
 using namespace std;
+
+/// <summary>
+/// 排列类型
+/// </summary>
+enum SortType {
+	None,      //非递增递减（包括0元素）
+	Increase,  //递增
+	Decrease,  //递减
+	Both       //递增递减(1个元素 或者 全是相等的元素)
+};
+
 /// <summary>
 /// 顺序表
 /// </summary>
@@ -14,14 +25,24 @@ private:
 	int length;  //目前容量
 	int maxSize; //最大容量
 	const int static defaultSize = 64;  //默认容量
-	int sizeToAdd;  //每次resize增加的容量(2、4、8、16....)
+	int sizeToAdd;       //每次resize增加的容量(2、4、8、16....)
+	SortType sortType;   //排序类型
 
 	void resize();  //扩容
+
+	void judgeSortType();  //判断排序类型
+	bool isAllEqual();     //判断是否所有元素相等(无元素为false)
+	bool isIncrease();     //判断是否为递增
+	bool isDecrease();     //判断是否为递减
+
+	void judgeSortAfterInsert(int pos);  //插入后判断排序类型
+
+	int binarySearch(T ele) const;    //二分法查找
 
 public:
 
 	SequenceList(int size = defaultSize);  //构造函数
-	SequenceList(SequenceList<T>& L);    //复制构造函数
+	SequenceList(SequenceList<T>& L);      //复制构造函数
 	~SequenceList();  //析构函数
 
 	bool Insert(int pos, T ele);  //插入
@@ -38,6 +59,8 @@ public:
 
 	bool Modify(int pos, T ele);  //修改指定位置的元素
 	void ModifyAToB(T A, T B);    //将所有的元素A改为元素B
+
+	void Sort();   //排序（默认为递增）
 
 	T At(int pos) const;     //返回指定位置元素
 	int Size() const;        //返回元素个数
