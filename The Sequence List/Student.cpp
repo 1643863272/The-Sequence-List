@@ -22,6 +22,13 @@ bool Student::operator<(const Student& other)
 	return (this->ID < other.ID);
 }
 
+void Student::Input()
+{
+	cout << "输入姓名:"; cin >> this->name;
+	cout << "输入ID:"; cin >> this->ID;
+	cout << "输入年龄:"; cin >> this->age;
+}
+
 
 ostream& operator<<(ostream& os, const Student& s)
 {

@@ -21,5 +21,7 @@ public:
 	bool operator==(const Student& other);
 	bool operator>(const Student& other);
 	bool operator<(const Student& other);
+
+	void Input();
 };
 

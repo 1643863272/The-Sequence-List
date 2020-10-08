@@ -334,6 +334,10 @@ int SequenceList<T>::Locate(T ele) const
 template<class T>
 void SequenceList<T>::Display() const
 {
+	if (length == 0) {
+		cout << "ÔªËØÎª0" << endl;
+		return;
+	}
 	for (int i = 0; i < length; i++)
 		cout << data[i] << " ";
 	cout << endl;
