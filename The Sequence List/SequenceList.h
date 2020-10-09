@@ -35,7 +35,7 @@ private:
 	bool isIncrease();     //判断是否为递增
 	bool isDecrease();     //判断是否为递减
 
-	void judgeSortAfterInsert(int pos);  //插入后判断排序类型
+	void judgeSortAfterInsert(int pos);  //插入元素后判断排序类型
 
 	int binarySearch(T ele) const;    //二分法查找
 

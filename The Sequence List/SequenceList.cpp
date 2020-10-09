@@ -309,6 +309,7 @@ int SequenceList<T>::Search(T ele) const
 {
 	if (length == 0)
 		return -1;
+	//有序时，使用二分法查找
 	if (sortType == SortType::Increase || sortType == SortType::Decrease)
 		return binarySearch(ele);
 
